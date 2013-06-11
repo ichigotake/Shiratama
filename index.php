@@ -1,5 +1,7 @@
 <?php
 
+define('APP_VERSION', '0.1');
+
 $include_paths = array(
     __DIR__ . '/app',
     __DIR__ . '/lib',
