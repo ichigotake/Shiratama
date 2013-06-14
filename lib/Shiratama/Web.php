@@ -48,49 +48,17 @@ class Shiratama_Web extends Shiratama {
             return ;
         }
         
-        $controller = (isset($uris[0])) ? Shiratama_Util::camelize($uris[0]) : 'Root';
-        if ($controller != 'Root' && Shiratama_Util::isController($controller)) {
-            $controller_class = "Controller_$controller";
-            $c = new $controller_class();
-            $action = (method_exists($c, $uris[1])) ? $uris[1] : 'index';
-        } else {
-            $controller = 'Controller_Root';
-            $c = new $controller();
-            $action = (method_exists($c, @$uris[1])) ? $uris[1] : 'index';
-            if (!method_exists($c, $action)) {
-                return $this->error_404();
-            }
-        }
+        $this->controller = (!empty($uris[0])) ? Shiratama_Util::camelize($uris[0]) : 'Root';
+        $this->action = (isset($uris[1])) ? Shiratama_Util::camelize($uris[1]) : 'index';
 
-        $c->$action($this);
-
-        if (!$this->isRender) {
-            $template = Shiratama_Util::catfile(APP_VIEW_DIR, $controller, "$action.php");
-            
-            ob_start();
-            include($template);
-            if (!isset($layout)) {
-                $layout = Shiratama_Util::catfile(APP_VIEW_DIR, 'Layout', 'default.php');
-            }
-
-            $content = ob_get_clean();
-            include(Shiratama_Util::catfile(APP_VIEW_DIR, 'Layout', $layout));
-        }
+        $this->render(Shiratama_Util::catfile($this->controller, "$this->action.php"), array(
+            'c' => $this,
+        ));
     }
 
     public function render($tmpl = null, $bind = array())
     {
-        $this->isRender = true;
-
-        $html = (new Shiratama_Web_View(array('template_dir' => APP_VIEW_DIR)))->render($tmpl, $bind);
-        return $this->res(200, array(
-            'Content-Type'   => $this->html_content_type,
-            'Content-Length' => strlen($html),
-        ), $html);
+        (new NanoTemplate(APP_VIEW_DIR))->render($tmpl, $bind);
     }
 
-    public function _functionArgsNum()
-    {
-        return count(explode(',', $line));
-    }
 }

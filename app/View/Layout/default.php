@@ -13,7 +13,7 @@
 </div>
 
 <div id="container">
-  <?php echo $content ?>
+  <?php echo $_content ?>
 </div>
 
 <div id="footer">

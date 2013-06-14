@@ -1,4 +1,7 @@
-<?php $layout = 'default.php' ?>
+<?php $_layout = 'Layout/default.php' ?>
+<?php
+$account = $c->Account->getInfo($c->req->param('id'));
+?>
 
 <h2>Account</h2>
 
