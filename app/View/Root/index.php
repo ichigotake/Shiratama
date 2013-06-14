@@ -1,6 +1,6 @@
 <?php $_layout = 'Layout/default.php' ?>
 <?php
-$account = $c->Account->getInfo($c->req->param('id'));
+$account = $c->Account->getInfo($c->req->param('id', 1));
 ?>
 
 <h2>Account</h2>

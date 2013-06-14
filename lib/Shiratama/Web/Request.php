@@ -25,8 +25,8 @@ class Shiratama_Web_Request {
         }
     }
 
-    public function param($key = null) {
-        return (isset($this->params['params'])) ? $this->params[$key] : null;
+    public function param($key = null, $default = null) {
+        return (isset($this->params['params'])) ? $this->params[$key] : $default;
     }
 
     public function uri($path = '/', $params = array())
