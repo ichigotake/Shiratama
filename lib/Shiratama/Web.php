@@ -35,6 +35,8 @@ class Shiratama_Web extends Shiratama {
     {
         $location = explode('?', str_replace($this->env['SCRIPT_NAME'], '', $this->env['PHP_SELF']));
         $uris = (isset($location[0])) ? explode('/', $location[0]) : array();
+        array_shift($uris);
+        
         $querys = array();
         if (isset($location[1])) {
             foreach (explode('&', $location[1]) as $_q) {
@@ -48,9 +50,8 @@ class Shiratama_Web extends Shiratama {
             return ;
         }
         
-        $this->controller = (!empty($uris[0])) ? Shiratama_Util::camelize($uris[0]) : 'Root';
-        $this->action = (isset($uris[1])) ? Shiratama_Util::camelize($uris[1]) : 'index';
-
+        $this->controller = (!empty($uris[0])) ? strtolower($uris[0]) : 'Root';
+        $this->action = (isset($uris[1])) ? strtolower($uris[1]) : 'index';
         $this->render(Shiratama_Util::catfile($this->controller, "$this->action.php"), array(
             'c' => $this,
         ));

@@ -29,15 +29,5 @@ class Shiratama_Util
         return new $classname($params);
     }
 
-    public function camelize($string)
     {
-        if (!$string) {
-            return $string;
-        }
-
-        $str = strstr($string, '_', ' ');
-        $str = ucwords($str);
-
-        return str_replace(' ', '', $str);
-    }
 }
