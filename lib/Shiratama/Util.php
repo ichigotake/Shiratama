@@ -29,5 +29,10 @@ class Shiratama_Util
         return new $classname($params);
     }
 
+    public function snakeCase($camelString)
     {
+        $string = preg_replace('/([A-Z])/', '_$1', $camelString);  
+        $string = strtolower($string);  
+        return ltrim($string, '_');  
+    }
 }

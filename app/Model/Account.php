@@ -2,11 +2,9 @@
 
 class Model_Account extends Shiratama_Model
 {
-    function getInfo($id)
+    function insert($values)
     {
-        $sth = $this->dbh->prepare('select * from account where id = ?');
-        $sth->execute(array($id));
-        return $sth->fetch(PDO::FETCH_ASSOC);
+        return parent::insert($this->tableName, $values);
     }
 }
 
