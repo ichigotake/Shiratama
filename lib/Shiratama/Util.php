@@ -23,7 +23,7 @@ class Shiratama_Util
         return $config;
     }
 
-    public function load_component($base, $name, $params)
+    public function loadComponent($base, $name, $params)
     {
         $classname = "{$base}_{$name}";
         return new $classname($params);

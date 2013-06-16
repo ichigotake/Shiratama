@@ -42,7 +42,7 @@ class Shiratama_Web_Request {
         return $uri;
     }
 
-    public function uri_with($params = array()) {
+    public function uriWith($params = array()) {
         return self::queryString($params);
     }
 
