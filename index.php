@@ -8,15 +8,8 @@ $include_paths = array(
 );
 set_include_path(get_include_path() . PATH_SEPARATOR . join(PATH_SEPARATOR, $include_paths));
 
-function __autoload($_classname) {
-    $classname = trim($_classname);
-    if (empty($classname)) {
-        return false;
-    }
+require 'Shiratama/AutoLoader.php';
 
-    $path = str_replace('_', '/', $classname) . '.php';
-    require_once($path);
-}
 
 $config = Shiratama_Util::loadConfig(Shiratama_Util::catfile('config', 'development.php'));
 
