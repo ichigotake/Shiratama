@@ -12,8 +12,14 @@ class Shiratama_Model
         if (!$sql) {
             return false;
         }
+        if ($binds) {
+            $sth = $this->dbh->prepare($sql);
+            $res = $sth->execute($binds);
+        } else {
+            $res = $this->dbh->query($sql);
+        }
+        return $res;
 
-        return $this->dbh->query($sql, $bind);
     }
 
 }
