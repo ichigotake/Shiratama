@@ -23,6 +23,11 @@ class Shiratama_Web_Request {
             list($key, $value) = explode('=', $_q);
             $this->params[$key] = $value;
         }
+        if (isset($_POST)) {
+            foreach ($_POST as $key => $value) {
+                $this->params[$key] = $value;
+            }
+        }
     }
 
     public function param($key = null, $default = null) {
