@@ -50,7 +50,7 @@ class Shiratama_Web extends Shiratama {
             return ;
         }
         
-        $this->controller = (!empty($uris[0])) ? strtolower($uris[0]) : 'Root';
+        $this->controller = (!empty($uris[0])) ? strtolower($uris[0]) : 'root';
         $this->action = (isset($uris[1])) ? strtolower($uris[1]) : 'index';
         $this->render(Shiratama_Util::catfile($this->controller, "$this->action.php"), array(
             'c' => $this,
