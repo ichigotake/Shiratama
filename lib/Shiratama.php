@@ -22,7 +22,7 @@ class Shiratama {
             return $this->$name;
         }
 
-        if (file_exists(Shiratama_Util::catfile(APP_ROOT, 'Model', "$name.php"))) {
+        if (!isset($this->$name) && file_exists(Shiratama_Util::catfile(APP_ROOT, 'Model', "$name.php"))) {
             $this->$name = Shiratama_Util::load_component('Model', $name, array('dbh' => $this->db->dbh));
             return $this->$name;
         }
