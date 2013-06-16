@@ -34,6 +34,18 @@ class Shiratama_Web_Request {
         return (isset($this->params[$key])) ? $this->params[$key] : $default;
     }
 
+    public function redirect($url = '/')
+    {
+        //プロトコル付きFQDNでない(設置ドメインの 相対or絶対パス)
+        if (!preg_match('/^(https?)?:\/\//', $url)) {
+            $redirectUrl = $this->uri($url);
+        } else {
+            $redirectUrl = $url;
+        }
+
+        header('Location: ' . $redirectUrl);
+    }
+
     public function uri($path = '/', $params = array())
     {
         $uri = '';
