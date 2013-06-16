@@ -2,7 +2,7 @@
 
 class Shiratama_Web extends Shiratama {
 
-    public $html_content_type = 'text_html; charset=UTF-8';
+    public $html_content_type = 'text/html; charset=UTF-8';
 
     public $isRender = false;
 
@@ -46,8 +46,7 @@ class Shiratama_Web extends Shiratama {
 
         $static_path = Shiratama_Util::catfile(ROOT, 'public', $uris);
         if (file_exists($static_path) && !is_dir($static_path)) {
-            echo file_get_contents($static_path);
-            return ;
+            return $this->res->responce_by_static_file($static_path);
         }
         
         $this->controller = (!empty($uris[0])) ? strtolower($uris[0]) : 'root';
