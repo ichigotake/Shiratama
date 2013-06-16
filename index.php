@@ -18,7 +18,7 @@ function __autoload($_classname) {
     require_once($path);
 }
 
-$config = Shiratama_Config::load(Shiratama_Util::catfile('config', 'development.php'));
+$config = Shiratama_Util::loadConfig(Shiratama_Util::catfile('config', 'development.php'));
 
 $app = new Shiratama_Web($config);
 $app->toApp();

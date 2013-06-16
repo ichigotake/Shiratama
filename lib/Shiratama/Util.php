@@ -2,10 +2,6 @@
 
 class Shiratama_Util 
 {
-    public function isController($controller)
-    {
-        return file_exists(self::catfile(APP_ROOT, 'Controller', "$controller.php"));
-    }
 
     public function catfile()
     {
@@ -19,6 +15,12 @@ class Shiratama_Util
         }
 
         return join(DIRECTORY_SEPARATOR, $paths);
+    }
+
+    public function loadConfig($file)
+    {
+        include $file;
+        return $config;
     }
 
     public function load_component($base, $name, $params)
