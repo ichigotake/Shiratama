@@ -2,9 +2,9 @@ Shiratama including some external library.
 
 Theres licenses...
 
-- NanoTemplate: MIT LICENSE
+- [NanoTemplate](https://github.com/ichigotake/php-NanoTemplate): MIT LICENSE
 
-- SQL-Maker: GPL v3
+- [SQL-Maker](https://github.com/memememomo/php-SQL-Maker): GPL v3
 
 and
 
