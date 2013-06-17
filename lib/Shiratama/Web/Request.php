@@ -12,6 +12,13 @@ class Shiratama_Web_Request {
      */
     public $params = array();
 
+    public function __get($name)
+    {
+        if (method_exists($this, $name)) {
+            return $this->$name();
+        }
+    }
+
     public function __construct($env = null) {
         $this->env = ($env === null) ? $_SERVER : $env;
 
@@ -28,6 +35,11 @@ class Shiratama_Web_Request {
                 $this->params[$key] = $value;
             }
         }
+    }
+
+    public function method()
+    {
+        return (isset($this->env['REQUEST_METHOD'])) ? $this->env['REQUEST_METHOD'] : 'GET';
     }
 
     public function param($key = null, $default = null) {
