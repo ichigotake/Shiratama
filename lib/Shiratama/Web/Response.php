@@ -26,7 +26,7 @@ class Shiratama_Web_Response
                 break;
 
             default:
-                $mimeType = 'text/plain';
+                $mimeType = mime_content_type($file);
         }
 
         return $mimeType;
