@@ -4,7 +4,7 @@ require 'Shiratama/Constant.php';
 
 class Shiratama {
 
-    public static $VERSION = '0.6';
+    public static $VERSION = '0.7';
 
     var $env;
 
