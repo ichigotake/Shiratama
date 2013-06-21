@@ -21,8 +21,11 @@ class Shiratama_Web_Response
                 break;
 
             case 'js':
-            case 'json':
                 $mimeType = 'application/javascript';
+                break;
+
+            case 'json':
+                $mimeType = 'application/json';
                 break;
 
             default:
