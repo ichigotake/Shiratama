@@ -61,7 +61,8 @@ class Shiratama_Web extends Shiratama {
         if (!isset($bind['c'])) {
             $bind['c'] = $this;
         }
-        (new NanoTemplate(APP_VIEW_DIR))->render($tmpl, $bind);
+        $view = new NanoTemplate(APP_VIEW_DIR);
+        $view->render($tmpl, $bind);
     }
 
 }
