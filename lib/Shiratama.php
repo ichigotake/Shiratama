@@ -1,7 +1,5 @@
 <?php
 
-require 'Shiratama/Constant.php';
-
 class Shiratama {
 
     public static $VERSION = '0.8';

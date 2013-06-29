@@ -1,5 +1,7 @@
 <?php
 
+require 'Constant.php';
+
 function __autoload($_classname) {
     $classname = trim($_classname);
     if (empty($classname)) {
