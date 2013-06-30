@@ -12,6 +12,15 @@ class Shiratama_Web_Response
         echo $body;
     }
 
+    public function response_as_json($data = array())
+    {
+        $body = json_encode($data);
+
+        header('Content-Type: application/json');
+        header('Content-Length', strlen($body));
+        echo $body;
+    }
+
     public function getMimeType($file)
     {
         $ext = preg_replace('/.*\.(.*?)$/', '$1', $file);
