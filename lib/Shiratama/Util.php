@@ -35,4 +35,5 @@ class Shiratama_Util
         $string = strtolower($string);  
         return ltrim($string, '_');  
     }
+
 }

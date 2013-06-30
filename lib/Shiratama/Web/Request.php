@@ -12,6 +12,8 @@ class Shiratama_Web_Request {
      */
     public $params = array();
 
+    public $_isOnRewrite = null;
+
     public function __get($name)
     {
         if (method_exists($this, $name)) {
@@ -46,6 +48,11 @@ class Shiratama_Web_Request {
         return (isset($this->params[$key])) ? $this->params[$key] : $default;
     }
 
+    public function baseUri()
+    {
+        return ($this->isOnRewrite()) ? dirname($this->env['SCRIPT_NAME']) . '/' : $this->env['SCRIPT_NAME'];
+    }
+
     public function redirect($url = '/')
     {
         //プロトコル付きFQDNでない(設置ドメインの 相対or絶対パス)
@@ -60,15 +67,29 @@ class Shiratama_Web_Request {
 
     public function uri($path = '/', $params = array())
     {
-        $uri = '';
-        if (!defined('REWRITE_ON') || !REWRITE_ON) {
-            $uri = (strpos($path, '/') === 0) ? $this->env['SCRIPT_NAME'] . $path : $path;
-            if ($params) {
-                $uri .= '?' . self::queryString($params);
-            }
+        $scriptPath = dirname($this->env['SCRIPT_NAME']);
+        $scriptName = str_replace("$scriptPath/", '', $this->env['SCRIPT_NAME']);
+        $uri = preg_replace("!^($scriptPath(?:/$scriptName)?)/?.+$!", "$1", $this->env['REQUEST_URI']);
+        if (!$this->isOnRewrite()) {
+            $uri .= "/$scriptName";
+        }
+        $uri .= $path;
+
+        if ($params) {
+            $uri .= '?' . self::queryString($params);
         }
 
         return $uri;
+    }
+
+    public function pathInfo()
+    {
+        $scriptName = basename($this->env['SCRIPT_NAME']);
+
+        $baseUri = dirname($this->baseUri());
+        $path = preg_replace("!$baseUri(/$scriptName)?!", '', $this->env['REQUEST_URI']);
+
+        return $path;
     }
 
     public function uriWith($params = array()) {
@@ -86,8 +107,33 @@ class Shiratama_Web_Request {
     public function parse($url) {
     }
 
-    public function isOnRewrite() {
-        ;
+    public function isOnRewrite()
+    {
+        if (!is_null($this->_isOnRewrite)) {
+            return $this->_isOnRewrite;
+        }
+
+        $htaccess = Shiratama_Util::catfile(ROOT, '.htaccess');
+        if (!file_exists($htaccess)) {
+            return false;
+        }
+
+        $isOnRewrite = false;
+        $fh = fopen($htaccess, 'r');
+        while (!feof($fh)) {
+            $line = trim(fgets($fh));
+            if (empty($line)) {
+                continue;
+            }
+
+            if (!preg_match("/^\s*RewriteBase\s+(.+)\s*$/", $line, $matches)) {
+                continue;
+            }
+            $isOnRewrite = ($this->baseUri == $matches[1]);
+        }
+
+        $this->_isOnRewrite = $isOnRewrite;
+        return $isOnRewrite;
     }
 }
 

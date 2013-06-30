@@ -33,9 +33,8 @@ class Shiratama_Web extends Shiratama {
 
     public function dispatch()
     {
-        $location = explode('?', str_replace($this->env['SCRIPT_NAME'], '', $this->env['PHP_SELF']));
-        $uris = (isset($location[0])) ? explode('/', $location[0]) : array();
-        array_shift($uris);
+        $location = explode('?', $this->req->pathInfo());
+        $uris = (isset($location[0])) ? explode('/', preg_replace('/^\//', '', $location[0])) : array();
         
         $querys = array();
         if (isset($location[1])) {
@@ -48,9 +47,10 @@ class Shiratama_Web extends Shiratama {
         if (file_exists($static_path) && !is_dir($static_path)) {
             return $this->res->responce_by_static_file($static_path);
         }
-        
+
         $this->controller = (!empty($uris[0])) ? strtolower($uris[0]) : 'root';
         $this->action = (isset($uris[1])) ? strtolower($uris[1]) : 'index';
+
         $this->render(Shiratama_Util::catfile($this->controller, "$this->action.php"), array(
             'c' => $this,
         ));
