@@ -45,7 +45,7 @@ class Shiratama_Web extends Shiratama {
 
         $static_path = Shiratama_Util::catfile(ROOT, 'public', $uris);
         if (file_exists($static_path) && !is_dir($static_path)) {
-            return $this->res->responce_by_static_file($static_path);
+            return $this->res->response_as_static_file($static_path);
         }
 
         $this->controller = (!empty($uris[0])) ? strtolower($uris[0]) : 'root';

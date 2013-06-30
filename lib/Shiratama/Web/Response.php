@@ -3,7 +3,7 @@
 class Shiratama_Web_Response
 {
     
-    public function responce_by_static_file($file)
+    public function response_as_static_file($file)
     {
         $body = file_get_contents($file);
         
