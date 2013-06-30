@@ -2,7 +2,7 @@
 
 class Shiratama {
 
-    public static $VERSION = '0.8';
+    public static $VERSION = '0.9';
 
     var $env;
 
