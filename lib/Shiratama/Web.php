@@ -31,6 +31,11 @@ class Shiratama_Web extends Shiratama {
         return $this->_res;
     }
 
+    public function redirect($path = '/', $params = array())
+    {
+        $this->req->redirect($path, $params);
+    }
+
     public function dispatch()
     {
         $location = explode('?', $this->req->pathInfo());
