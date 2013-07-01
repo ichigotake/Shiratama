@@ -68,12 +68,14 @@ class Shiratama_Web_Request {
     public function uri($path = '/', $params = array())
     {
         $scriptPath = dirname($this->env['SCRIPT_NAME']);
-        $scriptName = str_replace("$scriptPath/", '', $this->env['SCRIPT_NAME']);
-        $uri = preg_replace("!^($scriptPath(?:/$scriptName)?)/?.+$!", "$1", $this->env['REQUEST_URI']);
         if (!$this->isOnRewrite()) {
-            $uri .= "/$scriptName";
+            $scriptName = str_replace("$scriptPath/", '', $this->env['SCRIPT_NAME']);
+            $uri = preg_replace("!^($scriptPath)/($scriptName/?)?.+$!", "$1", $this->env['REQUEST_URI']);
+            $uri .= ($path == '/') ? $path : $scriptName . $path ;
+        } else {
+            #$uri = preg_replace("!^($scriptPath)/?.+$!", "$1", $this->env['REQUEST_URI']);
+            $uri = $scriptPath . $path;
         }
-        $uri .= $path;
 
         if ($params) {
             $uri .= '?' . self::queryString($params);
