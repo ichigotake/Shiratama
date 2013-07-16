@@ -70,11 +70,11 @@ class Shiratama_Web_Request {
         $scriptPath = dirname($this->env['SCRIPT_NAME']);
         if (!$this->isOnRewrite()) {
             $scriptName = str_replace("$scriptPath/", '', $this->env['SCRIPT_NAME']);
-            $uri = preg_replace("!^($scriptPath)/($scriptName/?)?.+$!", "$1", $this->env['REQUEST_URI']);
+            $uri = preg_replace("!^($scriptPath)/($scriptName)?/?.+$!", "$1/", $this->env['REQUEST_URI']);
             $uri .= ($path == '/') ? $path : $scriptName . $path ;
         } else {
-            #$uri = preg_replace("!^($scriptPath)/?.+$!", "$1", $this->env['REQUEST_URI']);
-            $uri = $scriptPath . $path;
+            $uri = preg_replace("!^($scriptPath)/?.+$!", "$1", $this->env['REQUEST_URI']);
+            $uri .= $path;
         }
 
         if ($params) {
