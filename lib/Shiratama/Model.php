@@ -61,6 +61,14 @@ class Shiratama_Model
         return $this->query($sql, $binds);
     }
 
+
+    public function select($table = null, $fields = array('*'), $condition = array(), $opt = array())
+    {
+        $tableName = (is_null($table)) ? $this->tableName : $table;
+        list($sql, $binds) = $this->sqlMaker->select($tableName, $fields, $condition, $opt);
+        return $this->query($sql, $binds);
+    }
+
     public function insert($table = null, $values = array())
     {
         $tableName = (is_null($table)) ? $this->tableName : $table;
