@@ -6,5 +6,6 @@ class Model_Account extends Shiratama_Model
     {
         return parent::insert($this->tableName, $values);
     }
+
 }
 

@@ -1,6 +1,6 @@
 
 create table account (
-    id int unsigned not null primary key,
+    id integer not null primary key autoincrement,
     name text unique not null,
     mail text unique not null
 );

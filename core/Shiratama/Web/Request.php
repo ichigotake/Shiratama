@@ -68,7 +68,10 @@ class Shiratama_Web_Request {
     public function uri($path = '/', $params = array())
     {
         $scriptPath = dirname($this->env['SCRIPT_NAME']);
-        if (!$this->isOnRewrite()) {
+        if ($scriptPath === '/') {
+            $uri = (strpos($path, '/') === 0) ? $this->env['SCRIPT_NAME'] . $path : $path;
+        }
+        elseif (!$this->isOnRewrite()) {
             $scriptName = str_replace("$scriptPath/", '', $this->env['SCRIPT_NAME']);
             $uri = preg_replace("!^($scriptPath)/?(:?$scriptName/?)?.+$!", "$1", $this->env['REQUEST_URI']);
             $uri .= ($path == '/') ? $path : "/$scriptName$path" ;
@@ -89,6 +92,8 @@ class Shiratama_Web_Request {
         $scriptName = basename($this->env['SCRIPT_NAME']);
 
         $baseUri = dirname($this->baseUri());
+        if ($baseUri === '/') $baseUri = '';
+
         $path = preg_replace("!$baseUri(/$scriptName)?!", '', $this->env['REQUEST_URI']);
 
         return $path;
